@@ -14,7 +14,7 @@ planetscale = MySQLdb.connect(
   user=os.getenv("USERNAME"),
   passwd= os.getenv("PASSWORD"),
   db= os.getenv("DATABASE"),
-  ssl_disabled = True
+  ssl = 0
 )
 
 
