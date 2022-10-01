@@ -57,6 +57,7 @@ class YoutubeManager:
     def start_download(self):
         self.downloading = True
         with self.download_manager as download_manager:
+            download_manager.cache.remove()
             download_manager.download([self.url])
 
 
