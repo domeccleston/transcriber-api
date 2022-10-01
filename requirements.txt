@@ -1,2 +1,4 @@
-Flask
-Gunicorn
+Flask==2.1.0
+Gunicorn==20.1.0
+youtube_dl==2021.12.17
+whisper==1.0
