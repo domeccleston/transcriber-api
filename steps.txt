@@ -14,4 +14,7 @@
 - set this to run the server on a port defined by env var [x]
 - set up a planetscale database [x]
 - run a python program that can insert into a pscale table [x]
-- 
+- add code to connect to db and print version and run locally [x]
+- deploy the API with the DB write and get it running on cloud run [x]
+- add code to insert a new row to the table and run locally [x]
+- deploy code to cloud run and address bugs [ ]

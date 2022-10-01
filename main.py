@@ -8,6 +8,7 @@ import validators
 import whisper
 import youtube_dl
 
+TABLE='Transcriptions'
 
 planetscale = MySQLdb.connect(
   host= os.getenv("HOST"),
@@ -107,18 +108,16 @@ def download():
     youtube_manager = YoutubeManager(url)
     youtube_manager.start_download()
     cursor = planetscale.cursor()
+    insert_sql = "INSERT INTO Transcriptions (url, length, upvotes, transcript) VALUES (%s, %s, %s, %s);"
+    insert_data = (url, str(len(youtube_manager.result_text)), 0, youtube_manager.result_text)
+    cursor.execute(insert_sql, insert_data)
 
-    cursor.execute(
-    "select @@version;"
-    )
+    planetscale.commit()
 
-    version = cursor.fetchone()
-
-    if version:
-        print("Version: ", version)
-    else:
-        print("Not connected.")
-    return youtube_manager.result_text
+    for row in cursor:
+        print(row)
+    
+    return 'done'
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
