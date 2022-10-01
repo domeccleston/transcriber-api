@@ -96,15 +96,8 @@ def hello_world():
 
 @app.route('/download', methods=['POST'])
 def download():
-    print("PRINTING DB")
-    print(planetscale)
-    content = request.get_json()
-    url = content['data']
-    print(url)
-    if not is_valid_url(url):
-        abort(400)
-    if not is_yt_url(url):
-        abort(400)
+    args = request.args
+    url = args['video']
     youtube_manager = YoutubeManager(url)
     youtube_manager.start_download()
     cursor = planetscale.cursor()
