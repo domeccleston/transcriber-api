@@ -12,7 +12,7 @@ WORKDIR $APP_HOME
 COPY . ./
 
 # Install ffmpeg for Whisper
-RUN apt update && sudo apt install ffmpeg
+RUN apt update && apt install ffmpeg
 
 # Install production dependencies.
 RUN pip install --no-cache-dir -r requirements.txt
