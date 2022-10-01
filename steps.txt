@@ -12,3 +12,6 @@
 - automatically set encoding to save time [x]
 - switch to base.en model [x]
 - set this to run the server on a port defined by env var [x]
+- set up a planetscale database [x]
+- run a python program that can insert into a pscale table [x]
+- 

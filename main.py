@@ -1,9 +1,24 @@
 from __future__ import unicode_literals
+from dotenv import load_dotenv
+load_dotenv()
 from flask import Flask, request, abort
+import MySQLdb
 import os
 import validators
 import whisper
 import youtube_dl
+
+planetscale = MySQLdb.connect(
+  host= os.getenv("HOST"),
+  user=os.getenv("USERNAME"),
+  passwd= os.getenv("PASSWORD"),
+  db= os.getenv("DATABASE"),
+  ssl_mode = "VERIFY_IDENTITY",
+  ssl      = {
+    "ca": "/etc/ssl/cert.pem"
+  }
+)
+
 
 app = Flask(__name__)
 
@@ -90,6 +105,18 @@ def download():
         abort(400)
     youtube_manager = YoutubeManager(url)
     youtube_manager.start_download()
+    cursor = planetscale.cursor()
+
+    cursor.execute(
+    "select @@version;"
+    )
+
+    version = cursor.fetchone()
+
+    if version:
+        print("Version: ", version)
+    else:
+        print("Not connected.")
     return youtube_manager.result_text
 
 if __name__ == '__main__':
