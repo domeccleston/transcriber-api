@@ -94,7 +94,7 @@ def is_yt_url(url):
 def hello_world():
     return 'Hello, World!'
 
-@app.route('/download', methods=['POST'])
+@app.route('/download', methods=['GET', 'POST'])
 def download():
     args = request.args
     url = args['video']
