@@ -8,6 +8,7 @@ import validators
 import whisper
 import youtube_dl
 
+
 planetscale = MySQLdb.connect(
   host= os.getenv("HOST"),
   user=os.getenv("USERNAME"),
@@ -96,6 +97,8 @@ def hello_world():
 
 @app.route('/download', methods=['POST'])
 def download():
+    print("PRINTING DB")
+    print(planetscale)
     content = request.get_json()
     url = content['data']
     print(url)
