@@ -4,4 +4,4 @@ mysqlclient==2.1.1
 python-dotenv==0.21.0
 validators==0.20.0
 git+https://github.com/openai/whisper.git#egg=whisper
-youtube_dl==2021.12.17
+youtube_dl==2021.12.17  
