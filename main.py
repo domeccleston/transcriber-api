@@ -1,9 +1,10 @@
 from __future__ import unicode_literals
 from dotenv import load_dotenv
 load_dotenv()
-from flask import Flask, request, abort
+from flask import Flask, request, abort, Response
 import MySQLdb
 import os
+import gc
 import whisper
 import youtube_dl
 
@@ -83,8 +84,9 @@ def download():
         insert_data = (url, title, str(len(youtube_manager.result_text)), 0, youtube_manager.result_text)
         cursor.execute(insert_sql, insert_data)
         planetscale.commit()
-        cursor.close()
-    return youtube_manager.result_text
+        cursor.close()  
+    gc.collect()
+    return Response(response=youtube_manager.result_text, status=200)
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
