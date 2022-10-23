@@ -69,18 +69,18 @@ def index():
 @app.route('/download', methods=['GET', 'POST'])
 def download():
     try:
-        token = args['token']
+        token = request.args['token']
         if token != os.getenv('TRANSCRIPT_API_TOKEN'):
             return abort(401)
     except KeyError:
         return abort(401)
-    args = request.args
-    url = args['video']
+    url = request.args['video']
+    title = request.args['title']
     youtube_manager = YoutubeManager(url)
     youtube_manager.start_download()
     with planetscale.cursor() as cursor:
-        insert_sql = "INSERT INTO Transcriptions (url, length, upvotes, transcript) VALUES (%s, %s, %s, %s);"
-        insert_data = (url, str(len(youtube_manager.result_text)), 0, youtube_manager.result_text)
+        insert_sql = "INSERT INTO Transcriptions (url, title, length, upvotes, transcript) VALUES (%s, %s, %s, %s);"
+        insert_data = (url, title, str(len(youtube_manager.result_text)), 0, youtube_manager.result_text)
         cursor.execute(insert_sql, insert_data)
         planetscale.commit()
         cursor.close()
