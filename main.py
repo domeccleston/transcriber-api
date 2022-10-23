@@ -79,7 +79,7 @@ def download():
     youtube_manager = YoutubeManager(url)
     youtube_manager.start_download()
     with planetscale.cursor() as cursor:
-        insert_sql = "INSERT INTO Transcriptions (url, title, length, upvotes, transcript) VALUES (%s, %s, %s, %s);"
+        insert_sql = "INSERT INTO Transcriptions (url, title, length, upvotes, transcript) VALUES (%s, %s, %s, %s, %s);"
         insert_data = (url, title, str(len(youtube_manager.result_text)), 0, youtube_manager.result_text)
         cursor.execute(insert_sql, insert_data)
         planetscale.commit()
